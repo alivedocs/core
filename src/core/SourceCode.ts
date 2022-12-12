@@ -1,6 +1,6 @@
 import {promises as fs} from 'fs';
 
-import {TagParser} from './TagParser';
+import {TagPatternParser} from './TagPatternParser';
 import {Config} from '../config';
 
 
@@ -10,8 +10,8 @@ export class SourceCode {
   config: Config;
   pattern: RegExp;
 
-  sourceLines: String[] = [];
-  tagTokens: TagParser[] = [];
+  sourceLines: string[] = [];
+  tagTokens: TagPatternParser[] = [];
 
   constructor(config: Config, filename: string) {
     this.config = config;
@@ -22,16 +22,16 @@ export class SourceCode {
     this.pattern = new RegExp(`${doctag}([^\n]+)`)
   }
 
-  loadTagTokens(index: String, line: String) {
+  loadTagTokens(index: string, line: string) {
     const item = line.match(this.pattern);
     if(item) {
       this.tagTokens.push(
-        new TagParser(index, item[1], this.filename)
+        new TagPatternParser(index, item[1], this.filename)
       );
     }
   }
 
-  parseSourceTags(source: String) {
+  parseSourceTags(source: string) {
     this.sourceLines = source.toString().split('\n');
     for (let index in this.sourceLines) {
       const sourceLine = this.sourceLines[index];

@@ -15,10 +15,10 @@ describe('PatternScan', () => {
   beforeAll(async () => {
     pattern = new PatternScan(config);
     results = await pattern.scan();
+    console.log(results[0]);
   })
 
   it('Found three results of file that contains docs', () => {
-    console.log(results);
     return expect(results).toHaveLength(3);
   });
 });

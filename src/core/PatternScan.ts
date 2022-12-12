@@ -8,7 +8,7 @@ export class PatternScan {
 
   constructor(config: Config) {
     this.config = config;
-  } 
+  }
 
   async scan(): Promise<SourceCode[]>{
     const root = this.config.get<string>('root');
