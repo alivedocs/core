@@ -1,0 +1,4 @@
+# @|SECTION:EXAMPLE_YAML_FILE
+#     | This is the text that will be shown in README.
+foo:
+  bar: 1

@@ -1,0 +1,2 @@
+// @|section:MY_SECTION
+// line 2
