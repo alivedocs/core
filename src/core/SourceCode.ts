@@ -41,14 +41,12 @@ export class SourceCode {
     }
   }
 
-  findDocTypes(callback: CallableFunction): void {
-    this.stream.then((data) => {
-      const text = data.toString();
-      const hasTag = this.pattern.test(text);
-      if (hasTag) {
-        this.parseSourceTags(text);
-      }
-      callback(hasTag);
-    });
+  async hasDocTypes(): Promise<boolean> {
+    const text = (await this.stream).toString();
+    const hasTag = this.pattern.test(text);
+    if (hasTag) {
+      this.parseSourceTags(text);
+    }
+    return hasTag;
   }
 }

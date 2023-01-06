@@ -11,14 +11,14 @@ import {SectionTag} from './tags/Section';
 
 /***
  * @D|section:MY_ID
- *     | asdasdasdasd asd asd asd as dasdasd
- *     | asdasdasdsaddasasdasd
- *     | asdasdasdasdadsasd
+ *   | asdasdasdasd asd asd asd as dasdasd
+ *   | asdasdasdsaddasasdasd
+ *   | asdasdasdasdadsasd
  * 
  * @D|option:MY_ENVIRONEMNTS
- *     | MyTesteOption
- *     | `false`
- *     | My options that do that does xyz.
+ *   | MyTesteOption
+ *   | `false`
+ *   | My options that do that does xyz.
  */
 class LiveDocs {
   sourceCodeList: SourceCode[] = [];

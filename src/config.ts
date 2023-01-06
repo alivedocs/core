@@ -2,6 +2,7 @@ type ConfigArgs = {
   root?: string;
   doctag?: string;
   pattern?: string;
+  concurrent?: number;
   exclude?: string[];
 }
 
@@ -11,6 +12,7 @@ export class Config {
   constructor(options?: ConfigArgs) {
     this.options = Object.assign({
       doctag: '@\\|',
+      concurrent: 5,
       root: process.cwd(),
       pattern: '**/*',
       exclude: [

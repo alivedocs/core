@@ -1,6 +1,7 @@
 import {glob} from 'glob';
 import {SourceCode} from './SourceCode';
 import {Config} from '../config';
+import {mapLimit} from 'async';
 
 export class PatternScan {
   config: Config;
@@ -10,41 +11,34 @@ export class PatternScan {
     this.config = config;
   }
 
-  async scan(): Promise<SourceCode[]>{
+  async glob(): Promise<String[]> {
     const root = this.config.get<string>('root');
     const pattern = this.config.get<string>('pattern');
     const exclude = this.config.get<string[]>('exclude');
 
     return new Promise((resolve, reject) => {
-      const results = (err: Error | null, files: string[]) => {
-        if (err) {
-          reject(err);
-          return;
-        } else {
-          let resolvedCallbacks = 0;
-          let totalFiles = files.length;
-          
-          files.forEach((filename) => {
-            const sourceCode = new SourceCode(this.config, filename);
-            
-            sourceCode.findDocTypes((hasDocTypes: boolean) => {
-              resolvedCallbacks += 1;
-
-              // add files that contains doctypes
-              hasDocTypes && this.sourceCodeList.push(sourceCode);
-              
-              if(totalFiles === resolvedCallbacks) {
-                resolve(this.sourceCodeList);
-              }
-            });
-          });
-        }
-      }
       glob(pattern, {
         root: root,
         nodir: true,
         ignore: exclude
-      }, results);
+      }, (err: Error | null, files: string[]) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(files);
+        }
+      });
+    });
+  }
+
+  async scan(): Promise<SourceCode[]>{
+    const filenames = await this.glob();
+    const concurrent = this.config.get<number>('concurrent');
+    return mapLimit(filenames, concurrent, async (filename: any) => {
+      const sourceCode = new SourceCode(this.config, filename);
+      const hasDocTypes = await sourceCode.hasDocTypes();
+      hasDocTypes && this.sourceCodeList.push(sourceCode);
+      return sourceCode;
     });
   }
 }

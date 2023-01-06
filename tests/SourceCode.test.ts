@@ -14,7 +14,7 @@ describe('SourceCode', () => {
 
   beforeAll(async () => {
     sourceCode = new SourceCode(config, "tests/demo-2/simple.txt");
-    sourceCode.findDocTypes(() => {});
+    await sourceCode.hasDocTypes();
   })
 
   it('Returns filename source', async () => {

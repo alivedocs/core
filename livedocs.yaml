@@ -30,13 +30,10 @@ contents:
     title: TODO
     items: auto-detect
   - type: table
+    id: THE_DATABASES_LIST
     title: Environments configurations
     description:  Internal Middleware
     headers:
-      - My col 1
-      - My col 2
-      - My col 3
-      - My col 4
-    rows:
-      - ref: MY_TABLE_ROW_1
-      - ref: MY_TABLE_ROW_2
+      - Name
+      - Size
+      - Public
