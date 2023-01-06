@@ -1,5 +1,7 @@
 import { TagType } from './core/TagType';
+import {Config} from './config';
 import {SourceCode} from './core/SourceCode';
+import {PatternScan} from './core/PatternScan';
 import {TagPatternParser} from './core/TagPatternParser';
 
 // Plugins 
@@ -18,7 +20,7 @@ import {SectionTag} from './tags/Section';
  *     | `false`
  *     | My options that do that does xyz.
  */
-export class LiveDocs {
+class LiveDocs {
   sourceCodeList: SourceCode[] = [];
 
   tagTypes: {[key: string]: TagType} = {
@@ -39,13 +41,12 @@ export class LiveDocs {
         const tagTypeParser = this.tagTypes[tagToken.tagType];
         if (tagTypeParser) {
           tagTypeParser.process(this, sourceCode, tagToken);
+        } else {
+          // console.warn(`Invalid tag pattern ${tagToken.tagType}`);
         }
       })
-      
-    //   this.tagTypes.forEach(tagTypes => {
-    //     console.log(tagTypes);
-    //   })
-    //   // console.log('sourceCode::::', sourceCode);
     });
   }
 }
+
+export {LiveDocs, SourceCode, Config, PatternScan};

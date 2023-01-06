@@ -3,9 +3,12 @@ import { LiveDocs } from '..';
 import { SourceCode } from '../core/SourceCode';
 import { TagPatternParser } from '../core/TagPatternParser';
 import { TagType } from '../core/TagType';
+import { TagItem } from '../core/TagItem';
 
 export class CodeTag extends TagType {
-  options = {
+  result: any = {}
+
+  options: any = {
     /**
      * This options automatically
      * indent code and removes left spaces
@@ -16,7 +19,7 @@ export class CodeTag extends TagType {
     /**
      * Like specifying language for syntax highlight blocks.
      */
-    language: 'txt'
+    language: ''
   }
 
   process(liveDocs: LiveDocs, sourceCode: SourceCode, tagToken: TagPatternParser): void {
@@ -33,10 +36,10 @@ export class CodeTag extends TagType {
 
         // convert to bool value
         const autoIndent = opts.autoIndent === 'true';
-
+        const language = opts.language ? opts.language : path.extname(tagToken.filename).replace('.', '');
         const startIndex = parseInt(start.index) + 1;
         const endIndex = tagToken.index;
-
+        
         let sourceLines = sourceCode.sourceLines.slice(startIndex, endIndex);
 
         let minLeftSpace: any;
@@ -51,7 +54,15 @@ export class CodeTag extends TagType {
           });
           sourceLines = newSourceLines;
         }
-        console.log(sourceLines.join('\n'));
+
+        // finally, creates a TagItem
+        sourceCode.tagItems.push(
+          new TagItem(tagToken.tagType, sourceCode, {
+            autoIndent,
+            language: language,
+            source: sourceLines.join('\n')
+          })
+        );
       } else if (isStart) {
         liveDocs.swapping.push(tagToken);
       }

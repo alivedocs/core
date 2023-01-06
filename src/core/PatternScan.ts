@@ -32,7 +32,7 @@ export class PatternScan {
 
               // add files that contains doctypes
               hasDocTypes && this.sourceCodeList.push(sourceCode);
-
+              
               if(totalFiles === resolvedCallbacks) {
                 resolve(this.sourceCodeList);
               }

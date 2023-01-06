@@ -16,6 +16,7 @@ export class Config {
       exclude: [
         'dist/**/*',
         'build/**/*',
+        'lib/**/*',
         'node_modules/**/*'
       ]
     }, options);
