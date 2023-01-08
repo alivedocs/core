@@ -2,6 +2,15 @@ interface IPlugin {
   hooks: any;
 }
 
+interface IConfig {
+  get<T>(key: string): T;
+}
+
+interface IManifest {
+  options: any;
+  plugins: any;
+}
+
 interface ISourceCode {}
 interface ITagPatternParser {}
 

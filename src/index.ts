@@ -1,25 +1,22 @@
-import { TagType } from './core/TagType';
 import {Config} from './config';
-import {Manifest} from './core/Manifest';
 import {SourceCode} from './core/SourceCode';
 import {PatternScan} from './core/PatternScan';
-import {TagPatternParser} from './core/TagPatternParser';
 
 // Plugins 
 import {PluginManager} from './plugins/manager';
 
 class AliveDocs implements IAliveDocs {
-  // sourceCodeList: SourceCode[] = [];
+  sourceCodeList: ISourceCode[] = [];
 
-  config: Config;
-  manifest: Manifest;
+  config: IConfig;
+  manifest: IManifest;
   plugins: IPlugin[] = []
   pluginManager: PluginManager;
-  tagTypes: {[key: string]: TagType} = {}
+  tagTypes: {[key: string]: ITagType} = {}
 
   swapping: any[] = []
 
-  constructor(config: Config, manifest: Manifest) {
+  constructor(config: IConfig, manifest: IManifest) {
     this.config = config;
     this.manifest = manifest;
     // this.sourceCodeList = sourceCodeList;
@@ -27,7 +24,7 @@ class AliveDocs implements IAliveDocs {
     this.pluginManager = new PluginManager(this);
   }
 
-  addTagType(key: string, tagClass: TagType) {
+  addTagType(key: string, tagClass: ITagType) {
     this.tagTypes[key] = tagClass;
   }
 

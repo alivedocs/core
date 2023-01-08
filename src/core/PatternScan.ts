@@ -1,13 +1,12 @@
 import {glob} from 'glob';
 import {SourceCode} from './SourceCode';
-import {Config} from '../config';
 import {mapLimit} from 'async';
 
 export class PatternScan {
-  config: Config;
-  sourceCodeList: SourceCode[] = [];
+  config: IConfig;
+  sourceCodeList: ISourceCode[] = [];
 
-  constructor(config: Config) {
+  constructor(config: IConfig) {
     this.config = config;
   }
 
@@ -31,7 +30,7 @@ export class PatternScan {
     });
   }
 
-  async scan(): Promise<SourceCode[]>{
+  async scan(): Promise<ISourceCode[]>{
     const filenames = await this.glob();
     const concurrent = this.config.get<number>('concurrent');
     return mapLimit(filenames, concurrent, async (filename: any) => {

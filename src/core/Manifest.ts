@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
 
-export class Manifest {
+export class Manifest implements IManifest {
   static async lookup() {
     const ymlFile = path.join(process.cwd(), 'alivedocs.yml');
     const yamlFile = path.join(process.cwd(), 'alivedocs.yaml');
@@ -33,6 +33,5 @@ export class Manifest {
   constructor(options: any) {
     this.plugins = options.plugins;
   }
-
 }
 

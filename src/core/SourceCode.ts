@@ -2,19 +2,18 @@ import {promises as fs} from 'fs';
 
 import {TagPatternParser} from './TagPatternParser';
 import {TagItem} from './TagItem';
-import {Config} from '../config';
 
 export class SourceCode implements ISourceCode {
   stream: Promise<Buffer>;
   filename: string;
-  config: Config;
+  config: IConfig;
   pattern: RegExp;
 
   sourceLines: string[] = [];
   tagTokens: TagPatternParser[] = [];
   tagItems: TagItem[] = []
 
-  constructor(config: Config, filename: string) {
+  constructor(config: IConfig, filename: string) {
     this.config = config;
     this.filename = filename;
     this.stream = fs.readFile(filename);
