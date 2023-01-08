@@ -4,8 +4,16 @@
     "rootDir": "src",
     "outDir": "lib"
   },
+  "sourceMap": true,
+  "typeRoots": [
+    "./node_modules/@types",
+    "./types/"
+  ],
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
-  ]
+  ],
+  "paths" : {
+    "@src/*": ["./src/*"]
+  }
 }

@@ -1,9 +1,8 @@
 import * as path from 'path';
-import { LiveDocs } from '..';
-import { SourceCode } from '../core/SourceCode';
-import { TagPatternParser } from '../core/TagPatternParser';
-import { TagType } from '../core/TagType';
-import { TagItem } from '../core/TagItem';
+import { SourceCode } from '../../../core/SourceCode';
+import { TagPatternParser } from '../../../core/TagPatternParser';
+import { TagType } from '../../../core/TagType';
+import { TagItem } from '../../../core/TagItem';
 
 export class CodeTag extends TagType {
   result: any = {}
@@ -22,7 +21,7 @@ export class CodeTag extends TagType {
     language: ''
   }
 
-  process(liveDocs: LiveDocs, sourceCode: SourceCode, tagToken: TagPatternParser): void {
+  process(liveDocs: IAliveDocs, sourceCode: SourceCode, tagToken: TagPatternParser): void {
     if (tagToken.tagValue) {
       const isStart = /^start/.test(tagToken.tagValue);
       const isEnd = /^end$/.test(tagToken.tagValue);

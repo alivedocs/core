@@ -1,4 +1,4 @@
-export class TagPatternParser {
+export class TagPatternParser implements ITagPatternParser {
   index: number;
   tagType: string = '';
   tagValue: string| null = null;

@@ -1,11 +1,10 @@
-import { LiveDocs } from '..';
-import { SourceCode } from '../core/SourceCode';
-import { TagPatternParser } from '../core/TagPatternParser';
-import { TagType } from '../core/TagType';
-import { TagItem } from '../core/TagItem';
+import { SourceCode } from '../../../core/SourceCode';
+import { TagPatternParser } from '../../../core/TagPatternParser';
+import { TagType } from '../../../core/TagType';
+import { TagItem } from '../../../core/TagItem';
 
 export class OptionTag extends TagType {
-  process(liveDocs: LiveDocs, sourceCode: SourceCode, tagToken: TagPatternParser): void {
+  process(liveDocs: IAliveDocs, sourceCode: SourceCode, tagToken: TagPatternParser): void {
     const cols = tagToken.tagValue?.split(' ') || [];
     // gets the options variable name
     const optionName = cols.shift();

@@ -4,8 +4,7 @@ import {TagPatternParser} from './TagPatternParser';
 import {TagItem} from './TagItem';
 import {Config} from '../config';
 
-
-export class SourceCode {
+export class SourceCode implements ISourceCode {
   stream: Promise<Buffer>;
   filename: string;
   config: Config;

@@ -1,52 +1,52 @@
 import { TagType } from './core/TagType';
 import {Config} from './config';
+import {Manifest} from './core/Manifest';
 import {SourceCode} from './core/SourceCode';
 import {PatternScan} from './core/PatternScan';
 import {TagPatternParser} from './core/TagPatternParser';
 
 // Plugins 
-import {CodeTag} from './tags/Code';
-import {OptionTag} from './tags/Option';
-import {SectionTag} from './tags/Section';
+import {PluginManager} from './plugins/manager';
 
-/***
- * @D|section:MY_ID
- *   | asdasdasdasd asd asd asd as dasdasd
- *   | asdasdasdsaddasasdasd
- *   | asdasdasdasdadsasd
- * 
- * @D|option:MY_ENVIRONEMNTS
- *   | MyTesteOption
- *   | `false`
- *   | My options that do that does xyz.
- */
-class LiveDocs {
-  sourceCodeList: SourceCode[] = [];
+class AliveDocs implements IAliveDocs {
+  // sourceCodeList: SourceCode[] = [];
 
-  tagTypes: {[key: string]: TagType} = {
-    'code': new CodeTag,
-    'option': new OptionTag,
-    'section': new SectionTag,
-  }
+  config: Config;
+  manifest: Manifest;
+  plugins: IPlugin[] = []
+  pluginManager: PluginManager;
+  tagTypes: {[key: string]: TagType} = {}
 
   swapping: any[] = []
 
-  constructor(sourceCodeList: SourceCode[]) {
-    this.sourceCodeList = sourceCodeList;
+  constructor(config: Config, manifest: Manifest) {
+    this.config = config;
+    this.manifest = manifest;
+    // this.sourceCodeList = sourceCodeList;
+
+    this.pluginManager = new PluginManager(this);
   }
 
-  toReadme() {
-    this.sourceCodeList.forEach((sourceCode) => {
-      sourceCode.tagTokens.forEach((tagToken: TagPatternParser) => {
-        const tagTypeParser = this.tagTypes[tagToken.tagType];
-        if (tagTypeParser) {
-          tagTypeParser.process(this, sourceCode, tagToken);
-        } else {
-          // console.warn(`Invalid tag pattern ${tagToken.tagType}`);
-        }
-      })
-    });
+  addTagType(key: string, tagClass: TagType) {
+    this.tagTypes[key] = tagClass;
   }
+
+  async run() {
+    await this.pluginManager.loadPlugins(this.manifest.plugins);
+  }
+
+  // toReadme() {
+  //   this.sourceCodeList.forEach((sourceCode) => {
+  //     sourceCode.tagTokens.forEach((tagToken: TagPatternParser) => {
+  //       const tagTypeParser = this.tagTypes[tagToken.tagType];
+  //       if (tagTypeParser) {
+  //         tagTypeParser.process(this, sourceCode, tagToken);
+  //       } else {
+  //         // console.warn(`Invalid tag pattern ${tagToken.tagType}`);
+  //       }
+  //     })
+  //   });
+  // }
 }
 
-export {LiveDocs, SourceCode, Config, PatternScan};
+export {AliveDocs, SourceCode, Config, PatternScan};

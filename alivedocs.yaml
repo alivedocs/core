@@ -1,3 +1,7 @@
+plugins:
+  - "@alivedocs/demo-plugin":
+      foo: bar
+
 contents:
   - type: section
     title: My introduction
