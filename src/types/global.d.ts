@@ -11,14 +11,31 @@ interface IManifest {
   plugins: any;
 }
 
-interface ISourceCode {}
-interface ITagPatternParser {}
+interface ITagItem {}
+
+interface ISourceCode {
+  tagItems: ITagItem[];
+  sourceLines: string[];
+}
+
+interface ITagPatternParser {
+  index: number;
+  filename: string;
+  tagType: string;
+  tagValue: string | null;
+}
 
 interface ITagType {
-  process(liveDocs: IAliveDocs, sourceCode: ISourceCode, tagToken: ITagPatternParser): void;
+  hooks?: any;
+  options: {[key: string]: string};
+  process(
+    liveDocs: IAliveDocs,
+    sourceCode: ISourceCode,
+    tagToken: ITagPatternParser
+  ): void;
 }
 
 interface IAliveDocs {
-  swapping: any[]
-  addTagType(key: string, tagClass: any): void
+  swapping: any[];
+  addTagType(key: string, tagClass: any): void;
 }

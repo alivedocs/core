@@ -39,9 +39,7 @@ module "my-example" {
 
 const pattern = new RegExp('@\\|([^\n]+)', 'gm');
 
-let match = "";
-while (match = pattern.exec(text)) {
-
+let match = '';
+while ((match = pattern.exec(text))) {
   console.log(match.index, match[0]);
 }
-

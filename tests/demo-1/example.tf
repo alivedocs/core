@@ -1,13 +1,20 @@
-// @|section:MY_SECTION
-//     | This is my module which I want to show in README.md
+module "security-groups" {
+  source = "/sg-group"
 
-// @|code:start(a=b, foo=bar, is_bool=true)
-    module "my-example" {
-      source = "/foo"
+  // @|code:start(language=terraform, startfrom=2)
+  ingress = [
+    {
+      from = "8000"
+      to = "8000"
+
+      ips = [
+        "127.0.0.0",
+        "127.0.0.1",
+        "127.0.0.2",
+        "127.0.0.3",
+      ]
     }
-// @|code:end
-
-/**
- * @|option:MY_ID_OPT asdasdasd | asdasdas | asdasdasd
- */
+  ]
+  // @|code:end
+}
 

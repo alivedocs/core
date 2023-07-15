@@ -2,7 +2,7 @@ import {Config} from './config';
 import {SourceCode} from './core/SourceCode';
 import {PatternScan} from './core/PatternScan';
 
-// Plugins 
+// Plugins
 import {PluginManager} from './plugins/manager';
 
 class AliveDocs implements IAliveDocs {
@@ -10,22 +10,23 @@ class AliveDocs implements IAliveDocs {
 
   config: IConfig;
   manifest: IManifest;
-  plugins: IPlugin[] = []
+  plugins: IPlugin[] = [];
   pluginManager: PluginManager;
-  tagTypes: {[key: string]: ITagType} = {}
+  tagTypes: {[key: string]: ITagType} = {};
 
-  swapping: any[] = []
+  swapping: any[] = [];
 
   constructor(config: IConfig, manifest: IManifest) {
     this.config = config;
     this.manifest = manifest;
     // this.sourceCodeList = sourceCodeList;
-
     this.pluginManager = new PluginManager(this);
   }
 
   addTagType(key: string, tagClass: ITagType) {
+    this.pluginManager.callHook('before:tag:initialize');
     this.tagTypes[key] = tagClass;
+    this.pluginManager.callHook('after:tag:initialize');
   }
 
   async run() {

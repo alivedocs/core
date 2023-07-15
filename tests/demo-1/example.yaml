@@ -1,4 +1,8 @@
-# @|SECTION:EXAMPLE_YAML_FILE
-#     | This is the text that will be shown in README.
+
 foo:
+  # @|table:MY_ID:option: bar | 1 | asdasd
   bar: 1
+
+```terraform
+bar: 1
+```

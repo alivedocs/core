@@ -33,6 +33,7 @@
   "dependencies": {
     "async": "^3.2.4",
     "glob": "^8.0.3",
+    "glob-docs": "0.0.7-alpha",
     "js-yaml": "^4.1.0"
   }
 }

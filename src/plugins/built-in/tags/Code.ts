@@ -1,11 +1,16 @@
 import * as path from 'path';
-import { SourceCode } from '../../../core/SourceCode';
-import { TagPatternParser } from '../../../core/TagPatternParser';
-import { TagType } from '../../../core/TagType';
-import { TagItem } from '../../../core/TagItem';
+import {TagItem} from '../../../core/TagItem';
 
-export class CodeTag extends TagType {
-  result: any = {}
+export class CodeTag implements ITagType {
+  hooks: any;
+
+  constructor() {
+    this.hooks = {
+      'tag:initialize': () => {},
+    };
+  }
+
+  result: any = {};
 
   options: any = {
     /**
@@ -18,10 +23,14 @@ export class CodeTag extends TagType {
     /**
      * Like specifying language for syntax highlight blocks.
      */
-    language: ''
-  }
+    language: '',
+  };
 
-  process(liveDocs: IAliveDocs, sourceCode: SourceCode, tagToken: TagPatternParser): void {
+  process(
+    livedocs: IAliveDocs,
+    sourceCode: ISourceCode,
+    tagToken: ITagPatternParser
+  ): void {
     if (tagToken.tagValue) {
       const isStart = /^start/.test(tagToken.tagValue);
       const isEnd = /^end$/.test(tagToken.tagValue);
@@ -29,27 +38,34 @@ export class CodeTag extends TagType {
       // push swapping to share temp values
       if (isEnd) {
         // it must be a start tag, if not throws an error.
-        const start = liveDocs.swapping.pop();
+        const start = livedocs.swapping.pop();
         // merge options
         const opts = {...this.options, ...start.tagOptions};
 
         // convert to bool value
         const autoIndent = opts.autoIndent === 'true';
-        const language = opts.language ? opts.language : path.extname(tagToken.filename).replace('.', '');
+        const language = opts.language
+          ? opts.language
+          : path.extname(tagToken.filename).replace('.', '');
         const startIndex = parseInt(start.index) + 1;
         const endIndex = tagToken.index;
-        
+
         let sourceLines = sourceCode.sourceLines.slice(startIndex, endIndex);
 
         let minLeftSpace: any;
-        let newSourceLines: string[] = [];
+        const newSourceLines: string[] = [];
         if (autoIndent) {
-          sourceLines.forEach((sourceLine) => {
+          sourceLines.forEach(sourceLine => {
             if (!minLeftSpace) {
               minLeftSpace = sourceLine.length;
             }
-            minLeftSpace = Math.min(minLeftSpace, sourceLine.length - sourceLine.trimLeft().length);
-            newSourceLines.push(sourceLine.slice(minLeftSpace, sourceLine.length));
+            minLeftSpace = Math.min(
+              minLeftSpace,
+              sourceLine.length - sourceLine.trimLeft().length
+            );
+            newSourceLines.push(
+              sourceLine.slice(minLeftSpace, sourceLine.length)
+            );
           });
           sourceLines = newSourceLines;
         }
@@ -59,11 +75,11 @@ export class CodeTag extends TagType {
           new TagItem(tagToken.tagType, sourceCode, {
             autoIndent,
             language: language,
-            source: sourceLines.join('\n')
+            source: sourceLines.join('\n'),
           })
         );
       } else if (isStart) {
-        liveDocs.swapping.push(tagToken);
+        livedocs.swapping.push(tagToken);
       }
     }
   }

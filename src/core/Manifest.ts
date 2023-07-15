@@ -6,7 +6,7 @@ export class Manifest implements IManifest {
   static async lookup() {
     const ymlFile = path.join(process.cwd(), 'alivedocs.yml');
     const yamlFile = path.join(process.cwd(), 'alivedocs.yaml');
-    
+
     let manifestFile;
     if (fs.existsSync(ymlFile)) {
       manifestFile = ymlFile;
@@ -27,11 +27,10 @@ export class Manifest implements IManifest {
     }
   }
 
-  options: any = {}
-  plugins: IPlugin[] = []
+  options: any = {};
+  plugins: IPlugin[] = [];
 
   constructor(options: any) {
     this.plugins = options.plugins;
   }
 }
-

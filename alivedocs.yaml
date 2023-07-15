@@ -3,41 +3,15 @@ plugins:
       foo: bar
 
 contents:
-  - type: section
-    title: My introduction
-    description: >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam maximus viverra elit 
-      non congue. Sed eget dictum augue, eu vestibulum tellus. Duis aliquam lorem sit amet sem fringilla
-      tincidunt. Nam ut justo dictum, semper nisl eu, convallis metus. Proin ac nulla vel nisl ultricies
-      elementum ut sit amet quam. Nam dictum, justo vel euismod porttitor, nisi orci condimentum justo,
-      tincidunt convallis mi nulla in dolor. Suspendisse faucibus accumsan lectus, vitae finibus sapien ornare
-      vitae. Nunc at interdum justo. Aenean ut elit non nibh auctor tempus eu quis tellus. Proin ornare urna sed
-      nisl ornare luctus. Proin pellentesque scelerisque nisl ac tincidunt.
-    sections:
-      - type: section
-        title: My other section
-        descriptions: >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam maximus viverra elit 
-          non congue. Sed eget dictum augue, eu vestibulum tellus. Duis aliquam lorem sit amet sem fringilla
-          tincidunt. Nam ut justo dictum, semper nisl eu, convallis metus. Proin ac nulla vel nisl ultricies
-          elementum ut sit amet quam. Nam dictum, justo vel euismod porttitor, nisi orci condimentum justo,
-          tincidunt convallis mi nulla in dolor. Suspendisse faucibus accumsan lectus, vitae finibus sapien ornare
-          vitae. Nunc at interdum justo. Aenean ut elit non nibh auctor tempus eu quis tellus. Proin ornare urna sed
-          nisl ornare luctus. Proin pellentesque scelerisque nisl ac tincidunt.
-        sections:
-          - ref: MY_SUB_SECTION_INTRO_1
-      - ref: MY_INTRO_1
-      - ref: MY_INTRO_2
-      - ref: MY_INTRO_3
-      - ref: MY_INTRO_4
-  - type: todo
-    title: TODO
-    items: auto-detect
+  - type: sections
+    include:
+      - src/**/*
+
   - type: table
-    id: THE_DATABASES_LIST
+    id: ENVIRONMENT
     title: Environments configurations
     description:  Internal Middleware
     headers:
       - Name
-      - Size
-      - Public
+      - Default
+      - Description
